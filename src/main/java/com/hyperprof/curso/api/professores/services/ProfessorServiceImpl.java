@@ -2,6 +2,7 @@ package com.hyperprof.curso.api.professores.services;
 
 import com.hyperprof.curso.api.professores.dtos.ProfessorResponse;
 import com.hyperprof.curso.api.professores.mappers.ProfessorMapper;
+import com.hyperprof.curso.core.exceptions.ProfessorNotFoundException;
 import com.hyperprof.curso.core.repositories.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,12 @@ public class ProfessorServiceImpl implements ProfessorService{
                 .stream()
                 .map(professorMapper::toProfessorResponse)
                 .toList();
+    }
+
+    @Override
+    public ProfessorResponse buscarProfessorPorId(Long professorId) {
+        return professorRepository.findById(professorId)
+                .map(professorMapper::toProfessorResponse)
+                .orElseThrow(ProfessorNotFoundException::new);
     }
 }
