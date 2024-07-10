@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Alunos extends Auditable{
+public class Aluno extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

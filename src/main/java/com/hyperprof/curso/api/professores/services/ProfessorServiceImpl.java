@@ -13,8 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProfessorServiceImpl implements ProfessorService{
 
-    private final ProfessorRepository professorRepository;
-    private final ProfessorMapper professorMapper;
+    private ProfessorRepository professorRepository;
+    private ProfessorMapper professorMapper;
 
     @Override
     public List<ProfessorResponse> buscarProfessores(String descricao) {

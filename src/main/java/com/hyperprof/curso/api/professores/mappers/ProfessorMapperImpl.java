@@ -5,7 +5,7 @@ import com.hyperprof.curso.core.models.Professor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProfessorMapperImpl implements  ProfessorMapper{
+public class ProfessorMapperImpl implements ProfessorMapper{
     @Override
     public ProfessorResponse toProfessorResponse(Professor professor) {
         if (professor == null) {
@@ -23,5 +23,6 @@ public class ProfessorMapperImpl implements  ProfessorMapper{
                 .createdAt(professor.getCreatedAt())
                 .updatedAt(professor.getUpdatedAt())
                 .build();
+
     }
 }
