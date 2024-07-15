@@ -1,5 +1,6 @@
 package com.hyperprof.curso.api.common.handlers;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.hyperprof.curso.api.common.dtos.ErrorResponse;
 import com.hyperprof.curso.api.common.dtos.ValidationErrorResponse;
 import com.hyperprof.curso.core.exceptions.ModelNotFoundException;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @RestControllerAdvice
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final PropertyNamingStrategies.SnakeCaseStrategy snakeCaseStrategy = new PropertyNamingStrategies.SnakeCaseStrategy();
 
     @ExceptionHandler(ModelNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleModelNotFoundException(ModelNotFoundException exception, WebRequest request) {
@@ -46,7 +49,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         var status = (HttpStatus) statusCode;
         var errors = new HashMap<String, List<String>>();
         ex.getBindingResult().getFieldErrors().forEach(error -> {
-            var fieldName = error.getField();
+            var fieldName = snakeCaseStrategy.translate(error.getField());
             var errorMessage = error.getDefaultMessage();
             if (errors.containsKey(fieldName)) {
                 errors.get(fieldName).add(errorMessage);

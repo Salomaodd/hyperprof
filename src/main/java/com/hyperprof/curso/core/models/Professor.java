@@ -25,7 +25,7 @@ public class Professor extends Auditable{
     private String nome;
 
     @ToString.Include
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "idade")

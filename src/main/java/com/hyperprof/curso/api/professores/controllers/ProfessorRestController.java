@@ -1,9 +1,12 @@
 package com.hyperprof.curso.api.professores.controllers;
 
 import com.hyperprof.curso.api.common.routes.ApiRoutes;
+import com.hyperprof.curso.api.professores.dtos.ProfessorRequest;
 import com.hyperprof.curso.api.professores.dtos.ProfessorResponse;
 import com.hyperprof.curso.api.professores.services.ProfessorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,5 +25,11 @@ public class ProfessorRestController {
     @GetMapping(ApiRoutes.BUSCAR_PROFESSOR_POR_ID)
     ProfessorResponse buscarProfessorPorId(@PathVariable Long professorId) {
         return professorService.buscarProfessorPorId(professorId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(ApiRoutes.CADASTRAR_PROFESSOR)
+    public ProfessorResponse cadastrarProfessor(@RequestBody @Valid ProfessorRequest professorRequest) {
+        return professorService.cadastrarProfessor(professorRequest);
     }
 }
