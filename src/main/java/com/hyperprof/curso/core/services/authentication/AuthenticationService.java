@@ -1,4 +1,4 @@
-package com.hyperprof.curso.core.services;
+package com.hyperprof.curso.core.services.authentication;
 
 import com.hyperprof.curso.core.models.AuthenticatedUser;
 import com.hyperprof.curso.core.repositories.ProfessorRepository;
