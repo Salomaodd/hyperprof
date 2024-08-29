@@ -10,11 +10,12 @@ public class JjwtConfigProperties {
 
     @Value("accessTokenSigningKey")
     private String accessTokenSigningKey;
-    @Value("accessTokenExpiration")
-    private Long accessTokenExpiration;
+
+    private Long accessTokenExpiration = 600L;
+
     @Value("refreshTokenSigningKey")
     private String refreshTokenSigningKey;
-    @Value("refreshTokenExpiration")
-    private Long refreshTokenExpiration;
+
+    private Long refreshTokenExpiration = 1200L;
 
 }
