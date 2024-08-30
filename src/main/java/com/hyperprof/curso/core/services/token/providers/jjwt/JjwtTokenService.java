@@ -48,9 +48,9 @@ public class JjwtTokenService implements TokenService {
 
     }
 
-    private String gerarToken(String subject, Long expiratioInSeconds, String signingKey) {
+    private String gerarToken(String subject, Long expirationInSeconds, String signingKey) {
         var dataHoraAtual = Instant.now();
-        var dataHoraExpiracao = dataHoraAtual.plusSeconds(expiratioInSeconds);
+        var dataHoraExpiracao = dataHoraAtual.plusSeconds(expirationInSeconds);
         return Jwts.builder()
                 .setClaims(new HashMap<String, Object>())
                 .setSubject(subject)
