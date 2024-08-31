@@ -1,12 +1,16 @@
 package com.hyperprof.curso.api.common.filters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hyperprof.curso.api.common.dtos.ErrorResponse;
 import com.hyperprof.curso.api.common.utils.JwtBearerDefaults;
 import com.hyperprof.curso.core.services.token.TokenService;
+import com.hyperprof.curso.core.services.token.TokenServiceException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -22,11 +27,32 @@ public class AccessTokenRequestFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
+    private final ObjectMapper objectMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        try {
+            tryDoFilterInternal(request, response, filterChain);
+        } catch (TokenServiceException e) {
+            var status = HttpStatus.UNAUTHORIZED;
+            var body = ErrorResponse.builder()
+                    .status(status.value())
+                    .error(status.getReasonPhrase())
+                    .timestamp(LocalDateTime.now())
+                    .message(e.getLocalizedMessage())
+                    .cause(e.getClass().getSimpleName())
+                    .build();
+            var json = objectMapper.writeValueAsString(body);
+            response.setStatus(status.value());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().write(json);
+        }
+    }
+
+    private void tryDoFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         var token = "";
         var email = "";
         var authorizationHeader = request.getHeader("Authorization");
