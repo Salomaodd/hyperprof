@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.hyperprof.curso.api.common.dtos.ErrorResponse;
 import com.hyperprof.curso.api.common.dtos.ValidationErrorResponse;
 import com.hyperprof.curso.core.exceptions.ModelNotFoundException;
+import com.hyperprof.curso.core.services.token.TokenServiceException;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,23 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     private final PropertyNamingStrategies.SnakeCaseStrategy snakeCaseStrategy = new PropertyNamingStrategies.SnakeCaseStrategy();
 
     @ExceptionHandler(ModelNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleModelNotFoundException(ModelNotFoundException exception, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleModelNotFoundException(
+            ModelNotFoundException exception, WebRequest request) {
         var status = HttpStatus.NOT_FOUND;
+        var body = ErrorResponse.builder()
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(exception.getLocalizedMessage())
+                .cause(exception.getClass().getSimpleName())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(TokenServiceException.class)
+    public ResponseEntity<ErrorResponse> handleTokenServiceException(
+            TokenServiceException exception, WebRequest request) {
+        var status = HttpStatus.UNAUTHORIZED;
         var body = ErrorResponse.builder()
                 .status(status.value())
                 .error(status.getReasonPhrase())

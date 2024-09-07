@@ -2,6 +2,7 @@ package com.hyperprof.curso.api.auth.controllers;
 
 import com.hyperprof.curso.api.auth.dtos.LoginRequest;
 import com.hyperprof.curso.api.auth.dtos.LoginResponse;
+import com.hyperprof.curso.api.auth.dtos.RefreshRequest;
 import com.hyperprof.curso.api.auth.services.AuthService;
 import com.hyperprof.curso.api.common.routes.ApiRoutes;
 import jakarta.validation.Valid;
@@ -19,5 +20,10 @@ public class AuthRestController {
     @PostMapping(ApiRoutes.LOGIN)
     public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.login(loginRequest);
+    }
+
+    @PostMapping(ApiRoutes.REFRESH)
+    public LoginResponse refresh(@RequestBody @Valid RefreshRequest refreshRequest) {
+        return authService.refresh(refreshRequest);
     }
 }
