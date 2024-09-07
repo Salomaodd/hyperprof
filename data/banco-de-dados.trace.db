@@ -21,3 +21,19 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 17 more
+2024-09-07 18:41:10.706844-03:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE `tokens_invalidos` (\000d\000a    `ìd` BIGINT PRIMARY KEY [*]AUTO_INCRREMENT,\000d\000a    `token` TEXT NOT NULL,\000d\000a    `created_at` DATETIME NOT NULL,\000d\000a    `updated_at` DATETIME NOT NULL\000d\000a    )"; expected "HASH, CONSTRAINT, COMMENT, UNIQUE, NOT NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE `tokens_invalidos` (
+    `ìd` BIGINT PRIMARY KEY AUTO_INCRREMENT,
+    `token` TEXT NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL
+    ) [42001-224]
+2024-09-07 19:00:13.321455-03:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE `tokens_invalidos` (\000d\000a    `ìd` BIGINT PRIMARY KEY [*]AUTO_INCRREMENT,\000d\000a    `token` TEXT NOT NULL,\000d\000a    `created_at` DATETIME NOT NULL,\000d\000a    `updated_at` DATETIME NOT NULL\000d\000a    )"; expected "HASH, CONSTRAINT, COMMENT, UNIQUE, NOT NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE `tokens_invalidos` (
+    `ìd` BIGINT PRIMARY KEY AUTO_INCRREMENT,
+    `token` TEXT NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL
+    ) [42001-224]

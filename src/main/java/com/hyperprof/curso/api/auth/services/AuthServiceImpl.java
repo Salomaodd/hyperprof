@@ -40,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
             throw new ProfessorNotFoundException();
         }
 
+        tokenService.invalidarToken(refreshRequest.getRefreshToken());
         return LoginResponse.builder()
                 .token(tokenService.gerarAccessToken(subject))
                 .refreshToken(tokenService.gerarRefreshToken(subject))
