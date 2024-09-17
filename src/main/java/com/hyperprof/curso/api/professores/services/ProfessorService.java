@@ -10,6 +10,7 @@ public interface ProfessorService {
     List<ProfessorResponse> buscarProfessores(String descricao);
     ProfessorResponse buscarProfessorPorId(Long professorId);
     ProfessorResponse cadastrarProfessor(ProfessorRequest professorRequest);
+    ProfessorResponse atualizarProfessor(ProfessorRequest professorRequest);
 
 
 }

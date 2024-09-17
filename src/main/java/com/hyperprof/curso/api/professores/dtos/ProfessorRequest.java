@@ -2,6 +2,7 @@ package com.hyperprof.curso.api.professores.dtos;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.hyperprof.curso.api.professores.validators.ProfessorEmailIsUnique;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class ProfessorRequest {
     @Email
     @NotNull
     @NotEmpty
+    @ProfessorEmailIsUnique
     @Size(min = 3, max = 255)
     private String email;
 
