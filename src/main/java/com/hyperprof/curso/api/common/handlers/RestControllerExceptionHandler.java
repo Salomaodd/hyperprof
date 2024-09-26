@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.hyperprof.curso.api.common.dtos.ErrorResponse;
 import com.hyperprof.curso.api.common.dtos.ValidationErrorResponse;
 import com.hyperprof.curso.core.exceptions.ModelNotFoundException;
+import com.hyperprof.curso.core.services.storage.StorageServiceException;
 import com.hyperprof.curso.core.services.token.TokenServiceException;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpHeaders;
@@ -45,6 +46,20 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     public ResponseEntity<ErrorResponse> handleTokenServiceException(
             TokenServiceException exception, WebRequest request) {
         var status = HttpStatus.UNAUTHORIZED;
+        var body = ErrorResponse.builder()
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(exception.getLocalizedMessage())
+                .cause(exception.getClass().getSimpleName())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(StorageServiceException.class)
+    public ResponseEntity<ErrorResponse> handleStorageServiceException(
+            StorageServiceException exception, WebRequest request) {
+        var status = HttpStatus.INTERNAL_SERVER_ERROR;
         var body = ErrorResponse.builder()
                 .status(status.value())
                 .error(status.getReasonPhrase())
