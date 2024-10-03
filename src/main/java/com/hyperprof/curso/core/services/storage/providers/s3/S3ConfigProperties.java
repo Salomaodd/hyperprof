@@ -4,7 +4,6 @@ import com.amazonaws.regions.Regions;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
 @Data
 @Configuration
 public class S3ConfigProperties {
@@ -15,10 +14,11 @@ public class S3ConfigProperties {
     @Value("${SECRET_KEY}")
     private String secretKey;
 
+    @Value("${REGION}")
+    private Regions region;
+
     @Value("${BUCKET_NAME}")
     private String bucketName;
 
-    @Value("${REGION}")
-    private Regions region;
 
 }

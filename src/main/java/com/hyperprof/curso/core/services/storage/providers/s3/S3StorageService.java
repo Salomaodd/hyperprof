@@ -11,17 +11,18 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hyperprof.curso.core.services.storage.StorageService;
 import com.hyperprof.curso.core.services.storage.StorageServiceException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
 
-
 @Service
 @RequiredArgsConstructor
 public class S3StorageService implements StorageService {
 
+    @Autowired
     private S3ConfigProperties configProperties;
 
     @Override

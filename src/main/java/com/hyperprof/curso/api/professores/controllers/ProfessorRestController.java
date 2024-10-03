@@ -1,13 +1,15 @@
 package com.hyperprof.curso.api.professores.controllers;
 
+import com.hyperprof.curso.api.common.dtos.MessageResponse;
 import com.hyperprof.curso.api.common.routes.ApiRoutes;
+import com.hyperprof.curso.api.professores.dtos.FotoRequest;
 import com.hyperprof.curso.api.professores.dtos.ProfessorRequest;
 import com.hyperprof.curso.api.professores.dtos.ProfessorResponse;
+import com.hyperprof.curso.api.professores.services.ProfessorFotoService;
 import com.hyperprof.curso.api.professores.services.ProfessorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ProfessorRestController {
 
     private final ProfessorService professorService;
+    private final ProfessorFotoService professorFotoService;
 
     @GetMapping(ApiRoutes.BUSCAR_PROFESSORES)
     public List<ProfessorResponse> buscarProfessores(@RequestParam(name = "q", required = false, defaultValue = "") String descricao) {
@@ -34,9 +37,10 @@ public class ProfessorRestController {
         return professorService.cadastrarProfessor(professorRequest);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PutMapping(ApiRoutes.ATUALIZAR_PROFESSOR_LOGADO)
     public ProfessorResponse atualizarProfessor(@RequestBody @Valid ProfessorRequest professorRequest) {
         return professorService.atualizarProfessor(professorRequest);
     }
+
 }
+

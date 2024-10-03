@@ -13,7 +13,7 @@ import java.util.Map;
 @NoArgsConstructor
 @SuperBuilder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class ValidationErrorResponse extends ErrorResponse{
 
     private Map<String, List<String>> errors;
